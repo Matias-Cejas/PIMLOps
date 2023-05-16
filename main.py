@@ -6,7 +6,7 @@ import locale
 import ast
 from fastapi.responses import FileResponse
 from fastapi.responses import HTMLResponse ,JSONResponse
-df = pd.read_csv("Datasets/Peliculas.csv",low_memory=False)
+df = pd.read_csv("DataSets\Peliculas.csv")
 
 app = FastAPI()
 
@@ -87,13 +87,12 @@ def retorno(pelicula):
 
 ##################################### Modelo Machine Learning  ##############################################################
 ###### Importo librerias y cargo el archivo luego de aplicar el ETL y el EDA ######
-
 from sklearn.metrics.pairwise import cosine_similarity
-df = pd.read_csv('DataSets/PeliculasML.csv') 
+data = pd.read_csv('DataSets/PeliculasML.csv', low_memory=False)  
 
 ###### Recorto el Dataframe para poder aplicar el modelo  ######
-n=2000 
-datos = df.head(n)
+n=10000 
+datos = data.head(n)
 
 ###### Alimento la variable X con los nombre de las columnas para poder aplicar el modelo ######
 X = datos[['belongs_to_collection', 'genres', 'original_language', "popularity", "production_companies", "release_date", "runtime", "status", "vote_average", "return"]] 
@@ -103,12 +102,14 @@ matris = cosine_similarity(X)
 
 ###### recomendacion >> Funcion en donde obtengo el indice del titulo segun el parametro luego obtengo los indices de peliculas similares ######
 ###### Finalmente busco en el dataframe el titulo de las peliculas similares y las retorno para visualizarlas en una lista ######
-@app.get('/recomendacion/{titulo}')
-def get_recomendacion(titulo, top_n=5):
-    indice_titulo = df[df['title'] == titulo].index[0]  
+@app.get('/recomendacion/{titulo:str}')
+def get_recomendacion(titulo):
+    top_n=5
+    indice_titulo = data[data['title'] == titulo].index[0]  
     resultado_matris = matris[indice_titulo]
     indices = resultado_matris.argsort()[-top_n-1:-1][::-1]  
-    recomendacion = df.loc[indices,"title"]  
+    recomendacion = data.loc[indices,"title"]  
     recomendacion = recomendacion.values.tolist()
-    return {'lista recomendada': recomendacion}
+    return {'lista recomendada': str(recomendacion)}
+
 
