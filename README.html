@@ -38,6 +38,8 @@
     <li>En el archivo ETL.ipynb se encuentra todo lo referido a el proceso de transformacion de los datos crudos que nos proporcionan. Para mas info remitirse a dicho archivo </li>
     <li>En el archivo EDA_ML.ipynb se encuentra el Analisis Exploratorio de Datos(EDA). Para mas info remitirse a dicho archivo </li>
     <li>En el archivo main.py se encuentra el achivo principal, el cual se deve ejecutar en la API</li>
+    <li>Link donde se puede acceder a la API >> <a href="https://matias-cejaspimlops.onrender.com">Enlace API</a></li>
+    <li>Link donde ejecutar los comandos de la API >> <a href="https://matias-cejaspimlops.onrender.com/docs">Enlace API/Docs</a></li>
     </ul></p>
     <h2>Bibliografía</h2> 
     <p>Consignas del Proyecto >> <a href="https://github.com/HX-PRomero/PI_ML_OPS/blob/main/Readme.md">Enlace al archivo</a></p>       
