@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import locale
 import ast
-df = pd.read_csv("DataSets/peliculas.csv",low_memory=False)
+df = pd.read_csv("DataSets/Peliculas.csv",low_memory=False)
 app = FastAPI()
 
 ###### Genero los @app para la api ######
