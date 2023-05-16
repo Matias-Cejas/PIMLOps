@@ -4,15 +4,20 @@ import pandas as pd
 import numpy as np
 import locale
 import ast
-df = pd.read_csv("DataSets/Peliculas.csv",low_memory=False)
+from fastapi.responses import FileResponse
+from fastapi.responses import HTMLResponse ,JSONResponse
+df = pd.read_csv("Datasets/Peliculas.csv",low_memory=False)
+
 app = FastAPI()
 
 ###### Genero los @app para la api ######
 # http://127.0.0.1:8000/
-###### .get("/") >> ventana inicial de la api. def index >> funcion inicial de la api mensaje de bienvenida ######
-@app.get("/")
+###### .get("/") >> ventana inicial de la api. def index >> funcion inicial de la api donde carga y  muestra el readme ######
+@app.get("/",response_class =HTMLResponse )
 def index():
-    return {"message":"Test Api PIMLOps"}
+    readme_path = "README.html"  
+    return FileResponse(readme_path)
+
 
 ###### .get('/peliculas_mes/ >> Ventana donde se consulta la funcion pelicula_mes ######
 ###### peliculas_mes(mes) >> Funcion donde se ingresa el mes y retorna la cantidad de peliculas que se estrenaron ese mes historicamente ######
@@ -23,6 +28,7 @@ def peliculas_mes(mes):
     respuesta = aux [mes]
     return {'mes':mes, 'cantidad':str(respuesta)}
 
+
 ###### .get('/peliculas_dia/ >> Ventana donde se consulta la funcion peliculas_dia ######
 ###### peliculas_dia(dia) >> Funcion donde se ingresa el dia y retorna la cantidad de peliculas que se estrenaron ese dia historicamente ######
 @app.get('/peliculas_dia/{dia:str}')
@@ -31,6 +37,7 @@ def peliculas_dia(dia):
     aux = df.groupby("day_name").size()
     respuesta = aux [dia]
     return {'dia':dia, 'cantidad':str(respuesta)}
+
 
 ###### .get('/franquicia/ >> Ventana donde se consulta la funcion franquicia ######
 ###### franquicia >> Funcion donde se ingresa la franquicia, retornando la cantidad de peliculas, ganancia total y promedio de la franquicia ######
@@ -42,6 +49,7 @@ def franquicia(franquicia):
     promedio = df.query("belongs_to_collection == @franquicia")['revenue'].mean()
     return {'franquicia':franquicia, 'cantidad de peliculas':str(cantidad), 'ganancia_total':str(ganancia), 'ganancia_promedio':str(promedio)}
 
+
 ###### .get('/peliculas_pais/ >> Ventana donde se consulta la funcion peliculas_pais ######
 ###### peliculas_dia(dia) >> Funcion donde se ingresas el pais, retornando la cantidad de peliculas producidas en el mismo  ######
 @app.get('/peliculas_pais/{pais:str}')
@@ -50,6 +58,7 @@ def peliculas_pais(pais):
     df_filtrado = df[df['production_countries'].apply(lambda x: pais in str(x))]
     cantidad_peliculas = df_filtrado["production_countries"].count()
     return {'pais':pais, 'cantidad':str(cantidad_peliculas)}
+
 
 ###### .get('/productoras/ >> Ventana donde se consulta la funcion productoras ######
 ###### productoras >> Funcion donde se ingresas la productora, retornando la ganancia total y la cantidad de peliculas que produjeron  ######
@@ -60,6 +69,7 @@ def productoras(productora):
     cantidad = df_filtrado["production_companies"].count()
     ganancia= df_filtrado["revenue"].sum()
     return {'productora':productora, 'ganancia_total':str(ganancia), 'cantidad':str(cantidad)}
+
 
 ###### .get('/retorno/ >> Ventana donde se consulta la funcion retorno ######
 ###### retorno >> Funcion donde se ingresas la pelicula, retornando la inversion, la ganancia, el retorno y el año en el que se lanzo  ######
@@ -72,6 +82,7 @@ def retorno(pelicula):
     retornoo= df_filtrado["return"].sum()
     anio = pd.to_datetime(df_filtrado["release_date"]).dt.year
     return {'Pelicula':  pelicula,'Inversion':str(inversion),'Ganacia':str(ganancia),'Retorno':str(retornoo),'Año':str(anio.item())}
+
 
 
 ##################################### Modelo Machine Learning  ##############################################################
