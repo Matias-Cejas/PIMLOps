@@ -1,2 +1,2 @@
-# PIMLOps
-Proyecto Machine Learning Peliculas
+# Machine Learning Operations (MLOps)
+PROYECTO INDIVIDUAL Nº1
