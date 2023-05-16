@@ -91,7 +91,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 data = pd.read_csv('DataSets/PeliculasML.csv', low_memory=False)  
 
 ###### Recorto el Dataframe para poder aplicar el modelo  ######
-n=10000 
+n=6000 
 datos = data.head(n)
 
 ###### Alimento la variable X con los nombre de las columnas para poder aplicar el modelo ######
