@@ -2,9 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Proyecto Machine Learning</title>
     <img src="https://stonkstutors.com/wp-content/uploads/2022/07/Soy-Henry-Entiende-como-funciona-la-plataforma-y-si-vale-la-pena.jpg" alt="henry" width="900" height="300">
-    
   </head>
   <body>
     <div style="display: flex; align-items: center;">
