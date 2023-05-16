@@ -6,7 +6,7 @@ import locale
 import ast
 from fastapi.responses import FileResponse
 from fastapi.responses import HTMLResponse ,JSONResponse
-df = pd.read_csv("DataSets\Peliculas.csv")
+df = pd.read_csv("DataSets/Peliculas.csv")
 
 app = FastAPI()
 
